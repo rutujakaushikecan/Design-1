@@ -1,35 +1,57 @@
 /*
 Intuition : as this is requires min element - using PriorityQueue (min heap)
-Time Complexity : O(log(n))
+Time Complexity : push - O(1)
+                  pop() - O(1)
+                  getMin() - O(1)
+                  top() - O(1)
 Space Complexity : O(n)
 */
 
 class MinStack {
+    class MinStack {
 
-    PriorityQueue<Integer> p;
-    Stack<Integer> stack;
+        Stack<Integer> stack;
+        Stack<Integer> min;
 
-    public MinStack() {
-        p = new PriorityQueue<Integer>();
-        stack = new Stack<Integer>();
+        public MinStack() {
+            stack = new Stack<Integer>();
+            min = new Stack<Integer>();
+        }
+
+        public void push(int val) {
+            stack.push(val);
+            if(min.isEmpty() || val <= getMin()){
+                min.push(val);
+            }
+        }
+
+        public void pop() {
+            if (getMin() == stack.peek()) {
+                min.pop();
+            }
+
+            stack.pop();
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+
+            return min.peek();
+
+        }
     }
 
-    public void push(int val) {
-        p.add(val);
-        stack.push(val);
-    }
-
-    public void pop() {
-        p.remove(stack.pop());
-    }
-
-    public int top() {
-        return stack.peek();
-    }
-
-    public int getMin() {
-        return p.peek();
-    }
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
 }
 
 /**

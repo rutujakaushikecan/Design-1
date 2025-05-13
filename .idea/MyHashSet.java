@@ -1,25 +1,55 @@
 /*
 Intuition : as this is limited number  (10 ^ 6), we can use boolean arrays
-Time Complexity : O(1)
+Time Complexity : add - O(1), remove - O(1), contains - O(1)
 Space Complexity : O(n)
 */
 class MyHashSet {
-    boolean[] arr;
+    int buckets = 1000;
+    int bucketItems = 1000;
+    boolean[][] storage = new boolean[buckets][];
+
+    public int bucket(int value){
+        return value % buckets;
+    }
+
+    public int bucketItem(int value){
+        return value / buckets;
+    }
+
+    /** Initialize your data structure here. */
 
     public MyHashSet() {
-        arr = new boolean[10000000];
+
     }
 
-    public void add(int key) {
-        arr[key] = true;
+    public void add(int value){
+        int bucket = bucket(value);
+        int bucketItem = bucketItem(value);
+
+        if(storage[bucket][] == null){
+            storage[bucket] = new boolean[bucketItem];
+        }
+
+        storage[bucket][bucketItem] = true;
     }
 
-    public void remove(int key) {
-        arr[key] = false;
+    public void remove(int value){
+        int bucket = bucket(value);
+        int bucketItem = bucketItem(value);
+
+        if(storage[bucket][] != null){
+            storage[bucket][bucketItem] = false;
+        }
     }
 
-    public boolean contains(int key) {
-        return arr[key];
+    /** Returns true if this set contains the specified element */
+
+    public boolean contains(int value) {
+        int bucket = bucket(value);
+        int bucketItem = bucketItem(value);
+
+        return storage[bucket][] != null && storage[bucket][bucketItem];
+        }
     }
 }
 
